@@ -77,3 +77,26 @@ Ambos scripts guardan sus resultados en el directorio `out/` con nomenclatura es
 - DNS: `dns_{tipo}_{dominio}_{timestamp}.txt`
 
 Esto permite mantener un historial de validaciones y facilita el debugging de problemas intermitentes.
+
+### Makefile inicial y pruebas BATS
+
+#### Prueba automatizada con BATS
+
+Se implementó una prueba en BATS (.bats) para validar que el endpoint de configuración definido en .env está disponible.
+
+Usamos la variable CONFIG_URL en .env que apunta al endpoint de configuración (ej. https://example.com/config.json).
+Se usa con `curl` con los flags -s -o /dev/null -w "%{http_code}" para obtener únicamente el código de estado HTTP de la respuesta. La prueba pasa solo si el endpoint está disponible y responde 200 OK.
+
+#### Automatizar flujo de trabajo con Makefile
+
+Se implementó un Makefile en la raíz del proyecto para estandarizar tareas comunes:
+
+- help: target por defecto que lista todos los comandos disponibles
+- prepare: crea .env desde la plantilla e instala bats-core localmente
+- tools: valida dependencias (curl, dig, bats)
+- test: corre pruebas unitarias con bats
+- check: ejecuta los scripts de validación HTTP y DNS
+- run: carga y muestra variables de entorno
+- clean: limpia directorios out/ y dist/
+
+Tener este Makefile asegura reproducibilidad, compatibilidad en Linux/WSL y simplifica el flujo de trabajo del equipo.
