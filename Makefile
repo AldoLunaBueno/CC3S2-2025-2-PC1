@@ -17,7 +17,8 @@ run: ## Carga entorno y mostrar variables
 	$(SHELL) -c "source src/cargar_env.sh && src/mostrar_env.sh"
 
 prepare: ## Preparar variables de entorno e instalar dependencias
-	cp docs/.env.example .env
+	@cp docs/.env.example .env
+	@chmod +x src/*.sh
 	@echo "Instalando dependencias..."
 	@if ! command -v bats >/dev/null 2>&1; then \
 		echo "Instalando bats-core localmente..."; \
@@ -39,9 +40,9 @@ tools: ## Verificar dependencias
 
 check: ## Ejecuta scripts de verificación manual (HTTP/DNS)
 	@echo "Ejecutando check_http.sh..."
-	@./scripts/check_http.sh
+	@./src/check_http.sh
 	@echo "Ejecutando check_dns.sh..."
-	@./scripts/check_dns.sh
+	@./src/check_dns.sh
 
 clean: ## Limpiar archivos generados
-	rm -rf $(OUT_DIR) $(DIST_DIR)
+	@rm -rf $(OUT_DIR) $(DIST_DIR)
