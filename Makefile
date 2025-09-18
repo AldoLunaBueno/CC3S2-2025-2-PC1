@@ -29,9 +29,11 @@ prepare: ## Preparar variables de entorno e instalar dependencias
 		echo "  export PATH=\$$HOME/.local/bin:\$$PATH"; \
 	fi
 
-test: ## Ejecuta pruebas con BATS
+test: ## Ejecuta pruebas con BATS y genera reportes en out/
 	@echo "Ejecutando pruebas con BATS"
-	@bats $(TEST_DIR)/*.bats
+	@mkdir -p $(OUT_DIR)
+	@bats --formatter pretty $(TEST_DIR)/*.bats | tee >(sed -r "s/\x1B\[[0-9;]*[A-Za-z]//g" > $(OUT_DIR)/bats-report.txt)
+	@echo "Resultados guardados en $(OUT_DIR)/bats_report.txt"
 
 tools: ## Verificar dependencias
 	@command -v dig >/dev/null 2>&1 || { echo "Falta dig"; exit 1; }
