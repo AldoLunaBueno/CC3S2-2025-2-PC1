@@ -42,3 +42,24 @@ verify-repro:
     @$(MAKE) build-dist >/dev/null 2>&1
     @diff $(DIST_DIR)/checksums.txt $(DIST_DIR).old/checksums.txt
 ```
+## 3. Verificación de Idempotencia y Artefactos de `make run`
+
+### Ejecución y Medición
+Para garantizar la eficiencia y predictibilidad del `Makefile`, se realizó la siguiente secuencia de tareas:
+
+1.  **Doble Ejecución**: Se ejecutó el target `make run` en dos ocasiones consecutivas pero con el comando `(time make run) > out/make_run_1.log 2>&1`.
+2.  **Captura de Artefactos**: La salida de cada ejecución, incluyendo los tiempos (`real`, `user`, `sys`), se redirigió a archivos de log específicos.
+    -   Log de primera ejecución: `out/make_run_1.log`
+    -   Log de segunda ejecución: `out/make_run_2.log`
+
+### Verificación de Eficiencia
+Se compararon los logs para verificar que el `Makefile` no realiza trabajo innecesario en ejecuciones subsecuentes.
+
+-   **Tiempo de la primera ejecución**: `real 0m1.187s`
+-   **Tiempo de la segunda ejecución**: `real 0m1.117s`
+
+La ligera disminución en el tiempo de la segunda ejecución confirma que no se repitieron tareas costosas, validando el comportamiento idempotente del proceso. La salida de ambos logs fue idéntica, asegurando la consistencia.
+
+### Documentación y Trazabilidad
+
+-   **Contrato de Salidas**: Se actualizó el documento `docs/contrato-salidas.md` para incluir una sección que describe los nuevos artefactos generados (`make_run_1.log`, `make_run_2.log`) y formaliza la evidencia de la idempotencia.
