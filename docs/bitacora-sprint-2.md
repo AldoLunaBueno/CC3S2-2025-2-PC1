@@ -47,3 +47,21 @@
 - **Código 1**: Error en resolución DNS/HTTP o validación  
 - **Código 130**: Interrupción por usuario (Ctrl+C)
 - **Documentación completa**: Creado `docs/contrato-salidas.md` con ejemplos.
+
+## Ejecución y administración del servicio simulado (run_service.sh)
+
+### Inicio del servicio con Make
+
+Al ejecutar el target service-start, el script run_service.sh se pone en ejecución en segundo plano. Durante este proceso, se crea un archivo de PID en la carpeta out/ que permite identificar el proceso en ejecución, y también se abre un archivo de log (service.log) donde se registran las actividades periódicas del servicio.
+
+### Registro de actividad en out/service.log
+
+El archivo de log registra el inicio, las validaciones periódicas y la recepción de señales del servicio simulado. Este registro sirve como evidencia del comportamiento de este servicio y facilita su observación y depuración.
+
+### Detención y limpieza del servicio
+
+Al ejecutar el target service-stop, se envía una señal SIGTERM al proceso, el cual maneja la señal de manera controlada. Registra la orden de detenerse y elimina el archivo PID. Solo queda el log como evidencia de la ejecución.
+
+### Simulación de un servicio real con systemd
+
+En un entorno real, este mismo script podría instalarse como un servicio de systemd con el nombre pipeline.service. Los comandos de administración se realizarían mediante systemctl (por ejemplo, iniciar, detener o consultar el estado del servicio). Los registros ya no se almacenarían en un archivo local, sino que estarían disponibles en el sistema mediante journalctl, con las ventajas de integración, timestamps oficiales y rotación automática de logs.
