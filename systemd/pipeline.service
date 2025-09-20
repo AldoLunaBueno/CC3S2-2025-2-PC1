@@ -1,0 +1,9 @@
+[Unit]
+Description=Servicio de validación pipeline http/dns
+
+[Service]
+ExecStart=/bin/bash ../src/run_service.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,4 +1,4 @@
-.PHONY: all check clean help run test tools
+.PHONY: all check clean help run test tools service-start service-stop
 
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
@@ -45,6 +45,12 @@ check: ## Ejecuta scripts de verificación manual (HTTP/DNS)
 	@./src/check_http.sh
 	@echo "Ejecutando check_dns.sh..."
 	@./src/check_dns.sh
+
+service-start: ## Iniciar servicio simulado
+	@./src/run_service.sh &
+
+service-stop: ## Parar servicio simulado con SIGTERM
+	@kill -TERM $$(cat out/service.pid)
 
 clean: ## Limpiar archivos generados
 	@rm -rf $(OUT_DIR) $(DIST_DIR)
