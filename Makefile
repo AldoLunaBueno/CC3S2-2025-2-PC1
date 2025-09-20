@@ -1,4 +1,4 @@
-.PHONY: all check clean help run test tools
+.PHONY: all check clean help run test tools service-start service-stop
 
 .DEFAULT_GOAL := help
 SHELL := /bin/bash

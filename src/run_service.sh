@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 LOGFILE="out/service.log"
@@ -20,7 +20,7 @@ mkdir -p out
 echo $$ > "$PIDFILE"
 echo "$(date +"%F %T") - Servicio iniciado con PID $$" >> "$LOGFILE"
 
-# Simulación: bucle infinito validando algo cada 5s
+# Simulación: bucle infinito validando algo cada 2s
 while true; do
     echo "$(date +"%F %T") - Validando targets (ejemplo: google.com)" >> "$LOGFILE"
     sleep 5
