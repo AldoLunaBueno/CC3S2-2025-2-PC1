@@ -1,0 +1,18 @@
+/bin/bash -c "source src/cargar_env.sh && src/mostrar_env.sh"
+
+[0;33m[1m[+][0m[0m [0;37m[1mCargando variables de entorno de '.env'...[0m[0m
+
+[0;32m[1m[+][0m[0m [0;37m[1mVariables cargadas exitosamente, compruébalas ejecutando 'mostrar_env.sh'[0m[0m
+
+[0;32m[1m[+][0m[0m [0;37m[1mMostrando variables de entorno cargadas:[0m[0m
+
+	[0;35m[1m- PORT:		[0m[0m[0;37m[1m8080[0m[0m
+	[0;35m[1m- MESSAGE:	[0m[0m[0;37m[1mPipeline HTTP/DNS activo[0m[0m
+	[0;35m[1m- RELEASE:	[0m[0m[0;37m[1mv0.0.1[0m[0m
+	[0;35m[1m- CONFIG_URL:	[0m[0m[0;37m[1mhttp://httpbin.org[0m[0m
+	[0;35m[1m- DNS_SERVER:	[0m[0m[0;37m[1m8.8.8.8[0m[0m
+	[0;35m[1m- TARGETS:	[0m[0m[0;37m[1mexample.com google.com[0m[0m
+
+real	0m1.117s
+user	0m0.005s
+sys	0m0.016s

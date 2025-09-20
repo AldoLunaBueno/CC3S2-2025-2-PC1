@@ -61,3 +61,26 @@ echo $?  # Retorna 0
 CONFIG_URL=" " ./check_http.sh GET
 echo $?  # Retorna 1
 ```
+
+# Contrato de Salidas
+
+## 1. Artefactos Generados
+
+El pipeline de `make` genera los siguientes artefactos en el directorio `out/`:
+
+- **`make_run_1.log`**: Log de la primera ejecución del comando `make run`. Contiene la salida estándar y de error, así como la medición del tiempo de ejecución.
+- **`make_run_2.log`**: Log de la segunda ejecución del comando `make run`. Similar al anterior, permite verificar la idempotencia y eficiencia del `Makefile`.
+- **`bats-report.txt`**: Reporte de la ejecución de las pruebas BATS, generado por el comando `make test`.
+
+## 2. Verificación de Idempotencia
+
+Al comparar `make_run_1.log` y `make_run_2.log`, se observa que:
+
+- La **salida** de ambos comandos es idéntica, lo que demuestra que la tarea `run` es predecible.
+- El **tiempo de ejecución** de la segunda ejecución es ligeramente menor, lo que indica que no se realiza trabajo innecesario.
+  - **Primera ejecución:** `real	0m1.187s`
+  - **Segunda ejecución:** `real	0m1.117s`
+
+Esto confirma que el `Makefile` está optimizado para no repetir tareas que no son necesarias.
+
+---
